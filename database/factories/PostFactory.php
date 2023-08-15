@@ -15,7 +15,7 @@ class PostFactory extends Factory
     {
         return [
             //
-            'user_id'=>\App\Models\User::factory(),
+//            'user_id'=>\App\Models\User::factory(),
             'title' => $this->faker->sentence(),
             'post_image' => $this->faker->imageUrl('900', '300'),
             'body' => $this->faker->paragraph(),
