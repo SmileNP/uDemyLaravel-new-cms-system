@@ -4,43 +4,54 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{route('user.profile.update', $user->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
+
                     <div class="mb-4">
-                        <img class="img-profile rounded-circle"  height="60px" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        <img class="img-profile rounded-circle"  height="60px" src="{{$user->avatar}}">
                     </div>
                     <div class="form-group">
-                        <input type="file">
+                        <input type="file" name="avatar">
                     </div>
 
                     <div class="form-group">
-                        <label for="usernamename">Username</label>
+                        <label for="username">Username</label>
                         <input type="text"
-                               name="name"
-                               class="form-control"
+                               name="username"
+                               class="form-control @error('username') is-invalid @enderror"
                                id="username"
                                aria-describedby=""
                                value="{{$user->username}}">
+                        @error('username')
+                        <div class="invalid-feedback">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text"
                                name="name"
-                               class="form-control"
+                               class="form-control @error('name') is-invalid @enderror"
                                id="name"
                                aria-describedby=""
                                value="{{$user->name}}">
+                        @error('name')
+                        <div class="invalid-feedback">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text"
                                name="email"
-                               class="form-control"
+                               class="form-control @error('email') is-invalid @enderror"
                                id="name"
                                aria-describedby=""
                                value="{{$user->email}}">
+                        @error('email')
+                        <div class="invalid-feedback">{{$message}}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
