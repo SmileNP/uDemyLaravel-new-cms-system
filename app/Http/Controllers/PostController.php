@@ -13,7 +13,7 @@ class PostController extends Controller
     {
 //        $posts = Post::all();
         $posts = auth()->user()->posts; // returns a collection of posts
-//        $posts = auth()->user()->posts(); // returns a hasMany relationship
+        $posts = auth()->user()->posts()->paginate(5); // returns a hasMany relationship
         return view('admin.posts.index', ['posts'=>$posts]);
     }
     public function show(Post $post)
