@@ -64,7 +64,7 @@
 
         <div class="d-flex">
             <div class="mx-auto">
-                {{$posts->links()}}
+                {{$posts->links('pagination::bootstrap-4')}}
             </div>
         </div>
     @endsection
