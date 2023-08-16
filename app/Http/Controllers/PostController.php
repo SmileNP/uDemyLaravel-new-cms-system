@@ -11,7 +11,9 @@ class PostController extends Controller
     //
     public function index()
     {
-        $posts = Post::all();
+//        $posts = Post::all();
+        $posts = auth()->user()->posts; // returns a collection of posts
+//        $posts = auth()->user()->posts(); // returns a hasMany relationship
         return view('admin.posts.index', ['posts'=>$posts]);
     }
     public function show(Post $post)
@@ -21,11 +23,14 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Post::class);
         return view('admin.posts.create');
     }
 
     public function store()
     {
+        $this->authorize('create', Post::class);
+
         $inputs = request()->validate([
             'title' => 'required | min:8 | max:255',
             'post_image' => 'file',
@@ -45,10 +50,12 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('view', $post);
         return view('admin.posts.edit', ['post'=>$post]);
     }
     public function destroy(Post $post, Request $request)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         $request->session()->flash('message', 'Post was deleted');
 //        Session::flash('message', 'Post was deleted');
@@ -71,6 +78,7 @@ class PostController extends Controller
         $post->title = $inputs['title'];
         $post->body = $inputs['body'];
 
+        $this->authorize('update', $post);
         $post->update();
 
         session()->flash('post-created-message', 'Post was updated');
