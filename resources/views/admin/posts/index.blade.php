@@ -11,7 +11,7 @@
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Posts Table</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -62,11 +62,11 @@
             </div>
         </div>
 
-        <div class="d-flex">
-            <div class="mx-auto">
-                {{$posts->links('pagination::bootstrap-4')}}
-            </div>
-        </div>
+{{--        <div class="d-flex">--}}
+{{--            <div class="mx-auto">--}}
+{{--                {{$posts->links('pagination::bootstrap-4')}}--}}
+{{--            </div>--}}
+{{--        </div>--}}
     @endsection
 
     @section('scripts')
@@ -74,6 +74,6 @@
         <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
         <!-- Page level custom scripts -->
-{{--        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>--}}
+        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
     @endsection
 </x-admin-master>
