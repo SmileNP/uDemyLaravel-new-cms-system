@@ -9,7 +9,7 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <img class="img-profile rounded-circle"  height="60px" src="{{$user->avatar}}">
+                        <img class="img-profile rounded-circle" height="60px" src="{{$user->avatar}}">
                     </div>
                     <div class="form-group">
                         <input type="file" name="avatar">
@@ -71,6 +71,100 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                @if(Session::has('message'))
+                    {{--        <div class="alert alert-danger">{{Session::get('message')}}</div>--}}
+                    <div class="alert alert-danger">{{session('message')}}</div>
+                @elseif(session('post-created-message'))
+                    <div class="alert alert-success">{{session('post-created-message')}}</div>
+
+                @endif
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Roles Table</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Options</th>
+                                    <th>Id</th>
+                                    <td>Name</td>
+                                    <th>Slug</th>
+                                    <th>Attach</th>
+                                    <th>Detach</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Options</th>
+                                    <th>Id</th>
+                                    <td>Name</td>
+                                    <th>Slug</th>
+                                    <th>Attach</th>
+                                    <th>Detach</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                @foreach($roles as $role)
+                                    <tr>
+                                        <td><input type="checkbox"
+                                                   @foreach($user->roles as $user_role)
+                                                       @if($user_role->slug == $role->slug)
+                                                           checked
+                                                @endif
+                                                @endforeach
+                                            ></td>
+                                        <td>{{$role->id}}</td>
+                                        <td>{{$role->name}}</td>
+                                        <td>{{$role->slug}}</td>
+                                        <td>
+                                            <form action="{{route('user.role.attach', $user)}}" method="post">
+                                                @method('PUT')
+                                                @csrf
+                                                <input type="hidden" name="role" value="{{$role->id}}">
+                                                <button class="btn btn-primary"
+                                                        @if($user->roles->contains($role)) disabled @endif
+                                                >Attach
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{{route('user.role.detach', $user)}}" method="post">
+                                                @method('PUT')
+                                                @csrf
+                                                <input type="hidden" name="role" value="{{$role->id}}">
+                                                <button class="btn btn-danger"
+                                                        @if(!$user->roles->contains($role)) disabled @endif
+                                                >Detach</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {{--        <div class="d-flex">--}}
+                {{--            <div class="mx-auto">--}}
+                {{--                {{$posts->links('pagination::bootstrap-4')}}--}}
+                {{--            </div>--}}
+                {{--        </div>--}}
+
+                @section('scripts')
+                    <!-- Page level plugins -->
+                    <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+                    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+                    <!-- Page level custom scripts -->
+                    <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+                @endsection
             </div>
         </div>
     @endsection
