@@ -46,7 +46,7 @@
                         <input type="text"
                                name="email"
                                class="form-control @error('email') is-invalid @enderror"
-                               id="name"
+                               id="email"
                                aria-describedby=""
                                value="{{$user->email}}">
                         @error('email')
